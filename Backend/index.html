@@ -1,21 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Monitoreo IoT</title>
-</head>
-<body>
-    <h1>Valor del sensor:</h1>
-    <h2 id="valor">Cargando...</h2>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitor IoT</title>
 
-    <script>
-        async function actualizar() {
-            const r = await fetch("TU_URL_RAILWAY/data");
-            const json = await r.json();
-            document.getElementById("valor").innerText = json.value;
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
         }
 
-        setInterval(actualizar, 1000);
-        actualizar();
+        #card {
+            width: 300px;
+            background: #fff;
+            padding: 20px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        #valueBox {
+            font-size: 40px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="card">
+        <h1>📡 Monitor IoT</h1>
+        <p>Último valor recibido:</p>
+        <div id="valueBox">---</div>
+    </div>
+
+    <script>
+        // 👇 CAMBIA ESTA URL por la que te de Railway
+        const API_URL = "https://TU-API-EN-RAILWAY.up.railway.app/data";
+
+        async function updateValue() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                document.getElementById("valueBox").innerText = data.value ?? "---";
+            } catch (error) {
+                document.getElementById("valueBox").innerText = "Error";
+            }
+        }
+
+        setInterval(updateValue, 1500); // cada 1.5 segundos
+        updateValue();
     </script>
 </body>
 </html>
