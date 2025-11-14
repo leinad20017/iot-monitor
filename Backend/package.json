@@ -1,24 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-
-const app = express();
-
-app.use(express.json());
-app.use(cors());
-
-let lastValue = 0;
-
-app.post("/sensor", (req, res) => {
-    lastValue = req.body.value;
-    console.log("Dato recibido:", lastValue);
-    res.json({ status: "OK" });
-});
-
-app.get("/data", (req, res) => {
-    res.json({ value: lastValue });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
+{
+  "name": "sensor-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
