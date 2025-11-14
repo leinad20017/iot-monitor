@@ -1,1 +1,22 @@
+const express = require("express");
+const app = express();
+app.use(express.json());
+app.use(require("cors")());
+
+let lastValue = 0;
+
+app.post("/sensor", (req, res) => {
+    lastValue = req.body.value;
+    console.log("Dato recibido:", lastValue);
+    res.json({ status: "OK" });
+});
+
+app.get("/data", (req, res) => {
+    res.json({ value: lastValue });
+});
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log("Servidor corriendo");
+});
+
 
